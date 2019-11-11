@@ -1,21 +1,43 @@
 <!DOCTYPE html>
 
-<html lang=en>
-	<title>PiKubed Docs</title>
-	<body>
-		<xmp theme="united" style="display:none;">
+<!-- The formating of the html is flat because I'm using a Markdown editor and it just works better this way -->
 
-# Pi Kubed Docs
+<html lang=en>
+<link rel='icon' href='icons8-spiral-bound-booklet-64.png' type='image/x-icon'/ >
+<title>PiKubed Docs</title>
+<body>
+<xmp theme="united" style="display:none;">
+
+# PiKubed Docs
 
 ## What is this?
 
-This is just a simple place holder site that I can quickly update using Markdown thanks to strapdownjs. I'll use this to quickly make notes about my PiKubed project where I plan to use Raspberry Pi 4s to create a Kubernetes cluster for learning purposes. Later I plan to replace this simple site with a more appropriate blog style site probably using something along the lines of WordPress.
+This is just a simple place holder site that I can quickly update using Markdown thanks to [strapdownjs](http://strapdownjs.com). I'll use this to quickly make notes about my PiKubed project where I plan to use Raspberry Pi 4s to create a Kubernetes cluster for learning purposes. Later I plan to replace this simple site with a more appropriate blog style site probably using something along the lines of WordPress.
 
 ## The plan
 
 I want to use 4 Raspberry Pi 4s to create a Kubernetes cluster with GlusterFS initially and perhaps CEPH later. I plan to use Ansible and create different roles to accomplish the different Day 1 and Day 2 tasks needed to deploy and manage the cluster. I figured this would be a good way to learn the intricacies of each of these technologies.
 
-      	</xmp>
-      	<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
-  	</body>
+## Current status
+
+Right now I do not have my Pis setup, instead I'm using 4 virtual machines setup on a [Proxmox](https://www.proxmox.com) hypervisor that are running Debian 10. This is the closest approximation of four Pis running Raspbian I can easily make and use as a dev environment.
+
+I've begun working on setting up Ansible roles to create a btrfs RAID0 device on each node. I've chosen btrfs becuase of its modern capabilities such as creating subvolumes and snapshots. I don't know how well glusterfs interacts with btrfs so that is part of the expirement. I'm hoping to be able to use subvolumes as mountpoints for the bricks so that all the bricks can share the btrfs storage pool instead of thinly provisioning devices in LVM.
+
+
+
+## Todo
+
+- Create BTRFS devices on each mode
+
+- Create BTRFS subvols and mounts for bricks
+
+- Install and configure GlusterFS
+
+- Install and configure K3S
+
+</xmp>
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</body>
+
 </html>
