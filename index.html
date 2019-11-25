@@ -24,8 +24,6 @@ Right now I do not have my Pis setup, instead I'm using 4 virtual machines setup
 
 I've begun working on setting up Ansible roles to create a btrfs RAID0 device on each node. I've chosen btrfs becuase of its modern capabilities such as creating subvolumes and snapshots. I don't know how well glusterfs interacts with btrfs so that is part of the expirement. I'm hoping to be able to use subvolumes as mountpoints for the bricks so that all the bricks can share the btrfs storage pool instead of thinly provisioning devices in LVM.
 
-
-
 ## Todo
 
 - Create BTRFS devices on each mode
@@ -37,7 +35,7 @@ I've begun working on setting up Ansible roles to create a btrfs RAID0 device on
 - Install and configure K3S
 
 </xmp>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+<script src="/v/0.2/strapdown.js"></script>
 </body>
 
 </html>
