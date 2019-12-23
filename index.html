@@ -16,23 +16,54 @@ This is just a simple place holder site that I can quickly update using Markdown
 
 ## The plan
 
-I want to use 4 Raspberry Pi 4s to create a Kubernetes cluster with GlusterFS initially and perhaps CEPH later. I plan to use Ansible and create different roles to accomplish the different Day 1 and Day 2 tasks needed to deploy and manage the cluster. I figured this would be a good way to learn the intricacies of each of these technologies.
+I have ditched most of my original plans as I have read up and learned about different technologies. I now want to make a Kubernetes cluter using 4 Raspberry Pi 4s, K3s using [k3sup](http://k3sup.dev), with [Rook CEPH](https://rook.io/) storage. K3s is a lightweight, compliant version of Kubernetes that doesn't rely on Docker and instead uses the containerd daemon directly. Rook is a Kubernetes native way of handling stateful storage. The Rook CEPH implementation has been released as stable and is what Red Hat OpenShift Container Platform uses for its stateful storage in version 4+.
 
 ## Current status
 
-Right now I do not have my Pis setup, instead I'm using 4 virtual machines setup on a [Proxmox](https://www.proxmox.com) hypervisor that are running Debian 10. This is the closest approximation of four Pis running Raspbian I can easily make and use as a dev environment.
+- Installed the latest version of [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/)
 
-I've begun working on setting up Ansible roles to create a btrfs RAID0 device on each node. I've chosen btrfs becuase of its modern capabilities such as creating subvolumes and snapshots. I don't know how well glusterfs interacts with btrfs so that is part of the expirement. I'm hoping to be able to use subvolumes as mountpoints for the bricks so that all the bricks can share the btrfs storage pool instead of thinly provisioning devices in LVM.
+- Created DHCP reservations for each Pi (can alternatively use static IPs outside of your DHCP range)
+
+- Performed `sudo apt update && sudo apt upgrade` to make sure packages are at latest version
+
+- Updated passwords, changed hostnames, set GPU memory split to 16mb, changed timezones
+
+- Added a user for Ansible `sudo adduser ansible && sudo usermod -aG sudo ansible`, this creates the ansible user and adds it to the sudo group
+
+- Distributed ssh keys to both pi and ansible users
+  
+  ```bash
+  ssh-copy-id pi@pikubed0
+  ssh-copy-id -i ~/.ssh/ansible ansible@pikubed0
+  ```
+
+- Added the Pis to my `/etc/ansible/inventory`
+  
+  ```yaml
+  [pikubed_cluster]
+  pikubed0
+  pikubed1
+  pikubed2
+  pikubed3
+  ```
+
+- And tested connectivity with `ansible pikubed_cluster -m ping`
 
 ## Todo
 
-- Create BTRFS devices on each mode
+- Install log2ram (minimize writes to sdcard by moving /var/log to ram for caching)
 
-- Create BTRFS subvols and mounts for bricks
+- Mount /tmp to tmpfs (minimize writes to sdcard by having /tmp mounted as a ramdisk)
 
-- Install and configure GlusterFS
+- Install K3s using k3sup
 
-- Install and configure K3S
+- Install rook-ceph
+
+- Install some way to proxy traffic to the cluster
+  
+  - Need more research on this topic
+
+- Test deployments (move this site to be hosted on the cluster)
 
 </xmp>
 <script src="/v/0.2/strapdown.js"></script>
