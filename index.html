@@ -79,23 +79,23 @@ I have ditched most of my original plans as I have read up and learned about dif
 
 ## Tempratures
 
-All Raspberry Pi 4s are installed in a 4 node [C4Labs Bramble Case](https://www.amazon.com/gp/product/B07VMHFZZJ/ref=ppx_yo_dt_b_asin_title_o01_s01?ie=UTF8&psc=1). Which was a pain to put together because the instructions have you balancing all the nuts and side pieces together like a house of cards. After it all collapsed I decided to rebuild and this time go ahead and put the screws in some of those nuts. They held it together loosely, but they at least held together until I could get other structural componants in place, then had to back out and re-screw the parts... The case comes with heatsinks and 2 fans (3 fans if you get the 6 node case). I placed the heatspreaders on the chips and out of curiosity I left the fans unplugged to measure temperature. After 1 hour of idle the node temps were and average of $85\degree$c.
+All Raspberry Pi 4s are installed in a 4 node [C4Labs Bramble Case](https://www.amazon.com/gp/product/B07VMHFZZJ/ref=ppx_yo_dt_b_asin_title_o01_s01?ie=UTF8&psc=1). Which was a pain to put together because the instructions have you balancing all the nuts and side pieces together like a house of cards. After it all collapsed I decided to rebuild and this time go ahead and put the screws in some of those nuts. They held it together loosely, but they at least held together until I could get other structural componants in place, then had to back out and re-screw the parts... The case comes with heatsinks and 2 fans (3 fans if you get the 6 node case). I placed the heatspreaders on the chips and out of curiosity I left the fans unplugged to measure temperature. After 1 hour of idle the node temps were and average of 85c.
 
 | Node     | Temp         |
 | -------- | ------------ |
-| pikubed0 | $89\degree$c |
-| pikubed1 | $91\degree$c |
-| pikubed2 | $87\degree$c |
-| pikubed3 | $73\degree$c |
+| pikubed0 | 89c          |
+| pikubed1 | 91c          |
+| pikubed2 | 88c          |
+| pikubed3 | 73c          |
 
-The room had an ambient temperature of $73\degree$f. Each node was too hot to handle and from what I can see online $85\degree$c is the max temperature the Pi should run at. Running at the max temp while idle even before Kuberenetes is installed isn't acceptable. With fans plugged in I measured the temperature after an hour at idle again. This time the average was $31\degree$c. The noise of the fans are a little annoying, but the difference in temperature is pretty staggering
+The room had an ambient temperature of 73f. Each node was too hot to handle and from what I can see online 85c is the max temperature the Pi should run at. Running at the max temp while idle even before Kuberenetes is installed isn't acceptable. With fans plugged in I measured the temperature after an hour at idle again. This time the average was 31c. The noise of the fans are a little annoying, but the difference in temperature is pretty staggering
 
 | Node     | Temp         |
 | -------- | ------------ |
-| pikubed0 | $32\degree$c |
-| pikubed1 | $31\degree$c |
-| pikubed2 | $30\degree$c |
-| pikubed3 | $31\degree$c |
+| pikubed0 | 32c          |
+| pikubed1 | 31c          |
+| pikubed2 | 30c          |
+| pikubed3 | 31c          |
 
 
 </xmp>
