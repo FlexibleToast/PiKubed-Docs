@@ -49,11 +49,21 @@ I have ditched most of my original plans as I have read up and learned about dif
 
 - And tested connectivity with `ansible pikubed_cluster -m ping`
 
+- Started creating ansible playbooks
+
+- Created ansible role to install and configure log2ram
+
+- Created configure.yml ansible playbook
+  
+  - Updates packages to latest
+  
+  - Moves /tmp to tmpfs
+  
+  - Installs log2ram
+
+- Created reboot.yml playbook that reboots each node in the cluster in series
+
 ## Todo
-
-- Install log2ram (minimize writes to sdcard by moving /var/log to ram for caching)
-
-- Mount /tmp to tmpfs (minimize writes to sdcard by having /tmp mounted as a ramdisk)
 
 - Install K3s using k3sup
 
@@ -64,6 +74,7 @@ I have ditched most of my original plans as I have read up and learned about dif
   - Need more research on this topic
 
 - Test deployments (move this site to be hosted on the cluster)
+
 
 </xmp>
 <script src="/v/0.2/strapdown.js"></script>
