@@ -39,12 +39,18 @@ I have ditched most of my original plans as I have read up and learned about dif
 
 - Added the Pis to my `/etc/ansible/inventory`
   
-  ```yaml
-  [pikubed_cluster]
-  pikubed0
-  pikubed1
-  pikubed2
-  pikubed3
+  ```textile
+  [pikubed_cluster:children]
+  master
+  workers
+  
+  [master]
+  pikubed0 vip_priority=110
+  
+  [workers]
+  pikubed1 vip_priority=109
+  pikubed2 vip_priority=108
+  pikubed3 vip_priority=107
   ```
 
 - And tested connectivity with `ansible pikubed_cluster -m ping`
@@ -54,6 +60,8 @@ I have ditched most of my original plans as I have read up and learned about dif
 - Created ansible role to install and configure log2ram
 
 - Created ansible role to install k3s on master and nodes
+
+- Added role for creating VIP (virtual IP) using keepalived
 
 - Created configure.yml ansible playbook
   
@@ -66,6 +74,8 @@ I have ditched most of my original plans as I have read up and learned about dif
   - Creates a /etc/hosts for each node that includes each node
   
   - Installs K3S
+  
+  - Creates VIP for high availability
 
 - Created reboot.yml playbook that reboots each node in the cluster in series
 
