@@ -4,11 +4,11 @@
 
 <html lang=en>
 <link rel='icon' href='icons8-spiral-bound-booklet-64.png' type='image/x-icon'/ >
-<title>PiKubed Docs</title>
+<title>Pi Kubed Docs</title>
 <body>
 <xmp theme="united" style="display:none;">
 
-# PiKubed Docs
+# Pi Kubed Docs
 
 ## What is this?
 
@@ -16,7 +16,7 @@ This is just a simple place holder site that I can quickly update using Markdown
 
 ## The plan
 
-I have ditched most of my original plans as I have read up and learned about different technologies. I now want to make a Kubernetes cluter using 4 Raspberry Pi 4s, [k3s](https://k3s.io/), with [Rook CEPH](https://rook.io/) storage. K3s is a lightweight, compliant version of Kubernetes that doesn't rely on Docker and instead uses the containerd daemon directly. Rook is a Kubernetes native way of handling stateful storage. The Rook CEPH implementation has been released as stable and is what Red Hat OpenShift Container Platform uses for its stateful storage in version 4+.
+I have ditched most of my original plans as I have read up and learned about different technologies. I now want to make a Kubernetes cluter using 4 Raspberry Pi 4s, using [k3s](https://k3s.io/), with [Rook CEPH](https://rook.io/) storage. K3s is a lightweight, compliant version of Kubernetes that doesn't rely on Docker and instead uses the containerd daemon directly. Rook is a Kubernetes native way of handling stateful storage. The Rook CEPH implementation has been released as stable and is what Red Hat OpenShift Container Platform uses for its stateful storage in version 4+.
 
 ## Current status
 
@@ -39,18 +39,18 @@ I have ditched most of my original plans as I have read up and learned about dif
 
 - Added the Pis to my `/etc/ansible/inventory`
   
-  ```textile
+  ```yaml
   [pikubed_cluster:children]
   master
   workers
-  
+
   [master]
-  pikubed0 vip_priority=110
-  
+  pikubed0  vip_priority=110
+
   [workers]
-  pikubed1 vip_priority=109
-  pikubed2 vip_priority=108
-  pikubed3 vip_priority=107
+  pikubed1  vip_priority=109
+  pikubed2
+  pikubed3
   ```
 
 - And tested connectivity with `ansible pikubed_cluster -m ping`
@@ -60,8 +60,6 @@ I have ditched most of my original plans as I have read up and learned about dif
 - Created ansible role to install and configure log2ram
 
 - Created ansible role to install k3s on master and nodes
-
-- Added role for creating VIP (virtual IP) using keepalived
 
 - Created configure.yml ansible playbook
   
@@ -74,8 +72,6 @@ I have ditched most of my original plans as I have read up and learned about dif
   - Creates a /etc/hosts for each node that includes each node
   
   - Installs K3S
-  
-  - Creates VIP for high availability
 
 - Created reboot.yml playbook that reboots each node in the cluster in series
 
@@ -108,6 +104,10 @@ The room had an ambient temperature of 73f. Each node was too hot to handle and 
 | pikubed1 | 31c  |
 | pikubed2 | 30c  |
 | pikubed3 | 31c  |
+
+## Keepalived
+
+Using Traefik for ingress means that traffic that goes to any node gets routed to the correct node. Therefore for high availability I decided to create a virtual IP that points to two nodes in the cluster. This way any incoming traffic can be routed to the VIP (such as port forwarding from the router) and even if one of the nodes is down, services should still be working. In this cluster arrangement it should be able to suffer 1 node failure, this removes a single point of failure.
 
 </xmp>
 <script src="/v/0.2/strapdown.js"></script>
