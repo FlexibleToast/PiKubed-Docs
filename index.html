@@ -31,14 +31,14 @@ I have ditched most of my original plans as I have read up and learned about dif
 - Added a user for Ansible `sudo adduser ansible && sudo usermod -aG sudo ansible`, this creates the ansible user and adds it to the sudo group
 
 - Distributed ssh keys to both pi and ansible users
-  
+
   ```bash
   ssh-copy-id pi@pikubed0
   ssh-copy-id -i ~/.ssh/ansible ansible@pikubed0
   ```
 
 - Added the Pis to my `/etc/ansible/inventory`
-  
+
   ```yaml
   [pikubed_cluster:children]
   master
@@ -62,15 +62,15 @@ I have ditched most of my original plans as I have read up and learned about dif
 - Created ansible role to install k3s on master and nodes
 
 - Created configure.yml ansible playbook
-  
+
   - Updates packages to latest
-  
+
   - Installs log2ram
-  
+
   - Moves /tmp to tmpfs
-  
+
   - Creates a /etc/hosts for each node that includes each node
-  
+
   - Installs K3S
 
 - Created reboot.yml playbook that reboots each node in the cluster in series
@@ -79,15 +79,19 @@ I have ditched most of my original plans as I have read up and learned about dif
 
 ## Todo
 
-- Learn how to use Traefik for ingress
-
-- Test deployments (move this site to be hosted on the cluster)
+Through research it seems the proper order for my todo list is to create a storage solution (plan is using rook-ceph), then change Traefik to use Letsencrypt issued SSL certificates that will use a persistent volume, then I will test the working functionality with a simple hello world container. From there the next thing to learn will be using a Dockerfile to build a docker image that I will use to replace my current nginx reverse proxy. With this reverse proxy I plan to point to my current VMs similar to what is being used now with nginx reverse proxy and Letsencrypt. This will hopefully give my reverse proxy higher availability and eases the transition to containerizing other apps I use.
 
 - Install rook-ceph
 
-## Tempratures
+- Learn how to use Traefik for ingress
 
-All Raspberry Pi 4s are installed in a 4 node [C4Labs Bramble Case](https://www.amazon.com/gp/product/B07VMHFZZJ/ref=ppx_yo_dt_b_asin_title_o01_s01?ie=UTF8&psc=1). Which was a pain to put together because the instructions have you balancing all the nuts and side pieces together like a house of cards. After it all collapsed I decided to rebuild and this time go ahead and put the screws in some of those nuts. They held it together loosely, but they at least held together until I could get other structural componants in place, then had to back out and re-screw the parts... The case comes with heatsinks and 2 fans (3 fans if you get the 6 node case). I placed the heatspreaders on the chips and out of curiosity I left the fans unplugged to measure temperature. After 1 hour of idle the node temps were and average of 85c.
+- Test deployments (simple hello world apache or nginx site)
+
+- Create containerized nginx reverse proxy
+
+## Notes about temperatures
+
+All Raspberry Pi 4s are installed in a 4 node [C4Labs Bramble Case](https://www.amazon.com/gp/product/B07VMHFZZJ/ref=ppx_yo_dt_b_asin_title_o01_s01?ie=UTF8&psc=1). Which was a pain to put together because the instructions have you balancing all the nuts and side pieces together like a house of cards. After it all collapsed I decided to rebuild and this time go ahead and put the screws in some of those nuts. They held it together loosely, but they at least held together until I could get other structural components in place, then had to back out and re-screw the parts... The case comes with heatspreaders and 2 fans (3 fans if you get the 6 node case). I placed the heatspreaders on the chips and out of curiosity I left the fans unplugged to measure temperature. After 1 hour of idle the node temps were and average of 85c.
 
 | Node     | Temp |
 | -------- | ---- |
@@ -96,7 +100,7 @@ All Raspberry Pi 4s are installed in a 4 node [C4Labs Bramble Case](https://www.
 | pikubed2 | 88c  |
 | pikubed3 | 73c  |
 
-The room had an ambient temperature of 73f. Each node was too hot to handle and from what I can see online 85c is the max temperature the Pi should run at. Running at the max temp while idle even before Kuberenetes is installed isn't acceptable. With fans plugged in I measured the temperature after an hour at idle again. This time the average was 31c. The noise of the fans are a little annoying, but the difference in temperature is pretty staggering
+The room had an ambient temperature of 73f. Each node was too hot to handle and from what I can see online 85c is the max temperature the Pi should run at. Running at the max temp while idle even before Kubernetes is installed isn't acceptable. With fans plugged in I measured the temperature after an hour at idle again. This time the average was 31c. The noise of the fans are a little annoying, but the difference in temperature is pretty staggering
 
 | Node     | Temp |
 | -------- | ---- |
